@@ -6,7 +6,7 @@ function normalizeHeaderName(headers: any, normalizeName: string): void {
         return
     }
     Object.keys(headers).forEach((name) => {
-        if (name !== normalizeName && name.toUpperCase() === normalizeName.toUpperCase()) {
+        if (name !== normalizeName && name.toLocaleUpperCase() === normalizeName.toLocaleUpperCase()) {
             headers[normalizeName] = headers[name]
             delete headers[name]
         }
@@ -29,14 +29,12 @@ export function parseHeaders(headers: string): any {
         return parsed
     }
     headers.split('\r\n').forEach((line) => {
-        let [key, val] = line.split(':')
-        key = key.trim().toUpperCase()
+        let [key, ...vals] = line.split(':')
+        key = key.trim().toLocaleLowerCase()
         if (!key) {
             return
         }
-        if (val) {
-            val = val.trim()
-        }
+        const val = vals.join(':').trim()
         parsed[key] = val
     })
     return parsed

@@ -36,7 +36,7 @@ export default class Axios {
         }
 
         config = mergeConfig(this.defaults, config)
-        config.method = config.method.toLowerCase()
+        config.method = config.method.toLocaleLowerCase()
 
         const chain: PromiseChain<any>[] = [{
             resolved: dispatchRequest,
